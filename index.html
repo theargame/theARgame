@@ -17,11 +17,11 @@
       <h1>🎈 The AR Game</h1>
       <p>Location-based AR Connect 4</p>
       <input id="username-input" type="text" placeholder="Your name" maxlength="20" />
-      <button id="btn-create">Create Game</button>
-      <button id="btn-join">Join Game</button>
+      <button id="btn-create" onclick="createGame()">Create Game</button>
+      <button id="btn-join" onclick="document.getElementById(\"join-section\").style.display=\"flex\"">Join Game</button>
       <div id="join-section" style="display:none">
         <input id="game-id-input" type="text" placeholder="Paste Game ID" />
-        <button id="btn-join-confirm">Join →</button>
+        <button id="btn-join-confirm" onclick="joinGame()">Join →</button>
       </div>
       <p id="lobby-error" style="color:#e63946;font-size:0.85rem;margin-top:8px;display:none"></p>
     </div>
