@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The AR Game — Connect 4</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div id="ui-overlay">
+
+    <!-- LOBBY -->
+    <div id="lobby" class="panel">
+      <h1>🎈 The AR Game</h1>
+      <p>Location-based AR Connect 4</p>
+      <input id="username-input" type="text" placeholder="Your name" maxlength="20" />
+      <button id="btn-create">Create Game</button>
+      <button id="btn-join">Join Game</button>
+      <div id="join-section" style="display:none">
+        <input id="game-id-input" type="text" placeholder="Paste Game ID" />
+        <button id="btn-join-confirm">Join →</button>
+      </div>
+      <p id="lobby-error" style="color:#e63946;font-size:0.85rem;margin-top:8px;display:none"></p>
+    </div>
+
+    <!-- WAITING -->
+    <div id="waiting" class="panel" style="display:none">
+      <h2>⩏ Waiting for opponent...</h2>
+      <p>Share this Game ID with your opponent:</p>
+      <div id="share-game-id" class="code-box"></div>
+      <button id="btn-copy">📋 Copy ID</button>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div id="status-bar" style="display:none">
+      <span id="turn-indicator"></span>
+      <span id="move-count"></span>
+    </div>
+
+    <!-- WIN SCREEN -->
+    <div id="win-screen" class="panel" style="display:none">
+      <h2 id="win-message"></h2>
+      <p id="win-sub"></p>
+      <button id="btn-new-game">Play Again</button>
+    </div>
+
+  </div>
+
+  <!-- A-FRAME SCENE -->
+  <a-scene
+    id="ar-scene"
+    embedded
+    renderer="antialias: true; colorManagement: true;"
+    background="color: #0a0a1a"
+    vr-mode-ui="enabled: true"
+  >
+    <a-assets timeout="5000"></a-assets>
+
+    <a-light type="ambient"     color="#cce8ff" intensity="0.55"></a-light>
+    <a-light type="directional" color="#ffffff" intensity="0.9" position="3 6 4"></a-light>
+    <a-light type="point"       color="#457b9d" intensity="0.5" position="-4 3 2"></a-light>
+    <a-light type="point"       color="#e63946" intensity="0.3" position="4 2 2"></a-light>
+
+    <a-sky color="#0a0a1a"></a-sky>
+
+    <a-entity id="camera-rig" position="0 0 8">
+      <a-camera
+        look-controls="magicWindowTrackingEnabled: true; touchEnabled: true"
+        wasd-controls="enabled: false"
+        fov="70"
+      >
+        <a-cursor
+          fuse="false"
+          raycaster="objects: .col-hit; far: 20"
+          color="#ffffff"
+          scale="0.5 0.5 0.5"
+        ></a-cursor>
+      </a-camera>
+    </a-entity>
+
+    <a-entity id="board-root"></a-entity>
+
+  </a-scene>
+
+  <script src="game.js"></script>
+</body>
+</html>
