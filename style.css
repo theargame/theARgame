@@ -1,130 +1,213 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: #0a0a1a;
-  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: #1a0a2e;
+  color: #fff;
   overflow: hidden;
 }
 
-a-scene {
+/* Full-screen background image with purple overlay */
+#bg {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  inset: 0;
   z-index: 0;
+  background:
+    linear-gradient(160deg, rgba(120,40,180,0.72) 0%, rgba(60,20,100,0.82) 60%, rgba(20,10,50,0.92) 100%),
+    url("bg.jpg") center center / cover no-repeat;
 }
+
+a-scene { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; }
 
 #ui-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  inset: 0;
   z-index: 10;
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
+/* ── Panel ── */
 .panel {
-  background: rgba(10,10,40,0.90);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px;
-  padding: 32px 40px;
+  background: rgba(10, 4, 28, 0.78);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 22px;
+  padding: 38px 40px 36px;
   text-align: center;
   pointer-events: all;
-  backdrop-filter: blur(12px);
-  max-width: 380px;
-  width: 90%;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  max-width: 400px;
+  width: 100%;
+  display: block;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
+/* ── Logo ── */
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.logo-wrap svg { width: 38px; height: 38px; }
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: #fff;
+}
+.logo-text em { font-style: normal; color: #c77dff; }
+
+/* ── Heading ── */
 .panel h1 {
-  font-size: 2rem;
-  margin-bottom: 8px;
-  background: linear-gradient(135deg, #e63946, #ffd60a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+  margin-bottom: 6px;
+  color: #fff;
+}
+.tagline {
+  color: rgba(255,255,255,0.42);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 26px;
 }
 
-.panel h2 { font-size: 1.4rem; margin-bottom: 16px; }
-
-.panel p {
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 20px;
-  font-size: 0.95rem;
+/* ── Divider ── */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.09);
+  margin: 0 0 22px;
 }
 
+/* ── Input ── */
+.input-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  text-align: left;
+  margin-bottom: 6px;
+}
 input[type="text"] {
   width: 100%;
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.08);
+  padding: 13px 15px;
+  border-radius: 11px;
+  border: 1px solid rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.07);
   color: #fff;
-  font-size: 1rem;
-  margin-bottom: 12px;
+  font-size: 0.97rem;
   outline: none;
-  transition: border 0.2s;
+  margin-bottom: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input[type="text"]::placeholder { color: rgba(255,255,255,0.22); }
+input[type="text"]:focus {
+  border-color: #c77dff;
+  box-shadow: 0 0 0 3px rgba(199,125,255,0.14);
 }
 
-input[type="text"]:focus { border-color: #ffd60a; }
-
+/* ── Buttons ── */
 button {
   width: 100%;
   padding: 13px;
-  border-radius: 8px;
+  border-radius: 11px;
   border: none;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
   margin-bottom: 10px;
-  transition: opacity 0.15s, transform 0.1s;
+  display: block;
+  transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+  letter-spacing: 0.02em;
 }
-
-button:hover  { opacity: 0.88; transform: translateY(-1px); }
+button:hover  { transform: translateY(-2px); opacity: 0.91; }
 button:active { transform: translateY(0); }
 
-#btn-create      { background: #e63946; color: #fff; }
-#btn-join        { background: rgba(255,255,255,0.12); color: #fff; }
-#btn-join-confirm { background: #ffd60a; color: #0a0a1a; }
-#btn-copy        { background: rgba(255,255,255,0.12); color: #fff; font-size: 0.85rem; }
-#btn-new-game    { background: linear-gradient(135deg, #e63946, #ffd60a); color: #fff; }
+#btn-create {
+  background: linear-gradient(135deg, #9b5de5, #7b2ff7);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(155,93,229,0.45);
+}
+#btn-create:hover { box-shadow: 0 6px 28px rgba(155,93,229,0.6); }
 
+#btn-join {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.82);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+#btn-join-confirm {
+  background: linear-gradient(135deg, #c77dff, #9b5de5);
+  color: #fff;
+}
+#btn-copy {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.11);
+  font-size: 0.84rem;
+  padding: 10px;
+}
+#btn-new-game { background: linear-gradient(135deg, #9b5de5, #c77dff); color: #fff; }
+
+.or-divider {
+  display: flex; align-items: center; gap: 10px;
+  color: rgba(255,255,255,0.2); font-size: 0.73rem;
+  text-transform: uppercase; letter-spacing: 0.1em; margin: 2px 0 10px;
+}
+.or-divider::before, .or-divider::after {
+  content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.09);
+}
+
+#lobby-error { color: #ff6b9d; font-size: 0.82rem; margin-top: 8px; min-height: 16px; display: block; }
+
+/* ── Waiting ── */
+#waiting h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 6px; }
+.wait-sub { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 18px; }
 .code-box {
-  background: rgba(255,255,255,0.08);
-  border-radius: 8px;
-  padding: 12px;
-  font-family: monospace;
-  font-size: 0.82rem;
-  word-break: break-all;
-  color: #ffd60a;
-  margin-bottom: 12px;
-  user-select: all;
-  cursor: pointer;
+  background: rgba(199,125,255,0.08);
+  border: 1px solid rgba(199,125,255,0.25);
+  border-radius: 10px; padding: 13px 15px;
+  font-family: "SF Mono","Fira Code",monospace; font-size: 0.78rem;
+  word-break: break-all; color: #c77dff; margin-bottom: 12px;
+  user-select: all; cursor: pointer; letter-spacing: 0.03em; line-height: 1.6;
 }
 
+/* ── Win ── */
+#win-screen h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 8px; }
+#win-screen p { color: rgba(255,255,255,0.45); margin-bottom: 22px; }
+
+/* ── Status bar ── */
 #status-bar {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(10,10,40,0.88);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 30px;
-  padding: 10px 28px;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  pointer-events: none;
-  backdrop-filter: blur(8px);
-  font-size: 0.95rem;
-  font-weight: 600;
-  z-index: 20;
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  background: rgba(10,4,28,0.88); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 30px; padding: 10px 26px; display: flex; gap: 18px;
+  align-items: center; pointer-events: none; backdrop-filter: blur(12px);
+  font-size: 0.91rem; font-weight: 600; z-index: 20; white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
-
-#turn-indicator.red    { color: #e63946; }
+#turn-indicator.red { color: #ff6b9d; }
 #turn-indicator.yellow { color: #ffd60a; }
 
-@media (max-width: 600px) {
-  .panel { padding: 24px 20px; }
-  .panel h1 { font-size: 1.6rem; }
+/* ── Hashtag footer ── */
+.hashtag {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.25); font-size: 0.8rem;
+  letter-spacing: 0.12em; z-index: 11; pointer-events: none;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .panel { padding: 28px 22px; border-radius: 18px; }
+  .panel h1 { font-size: 1.1rem; }
 }
