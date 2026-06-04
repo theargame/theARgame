@@ -46,7 +46,7 @@
     var panels = ['lobby', 'waiting', 'win-screen'];
     panels.forEach(function (id) {
       var el = document.getElementById(id);
-      if (el) el.style.display = (id === name) ? 'flex' : 'none';
+      if (el) el.style.display = (id === name) ? 'block' : 'none';
     });
     // Show/hide status bar and AR board
     var statusBar = document.getElementById('status-bar');
