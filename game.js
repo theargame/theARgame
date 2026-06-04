@@ -657,23 +657,11 @@
     toggleJoinSection(false);
   }
 
-  // Wait for DOM + A-Frame scene to be ready
+  // Boot on DOM ready — don't wait for A-Frame (buttons/Supabase don't need it)
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      var scene = document.getElementById('ar-scene');
-      if (scene) {
-        scene.addEventListener('loaded', boot);
-      } else {
-        boot();
-      }
-    });
+    document.addEventListener('DOMContentLoaded', boot);
   } else {
-    var scene = document.getElementById('ar-scene');
-    if (scene && !scene.hasLoaded) {
-      scene.addEventListener('loaded', boot);
-    } else {
-      boot();
-    }
+    boot();
   }
 
 })();
