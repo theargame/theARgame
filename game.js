@@ -30,7 +30,15 @@
 
   // ─── Supabase init ──────────────────────────────────────────────────────────
   function initSupabase() {
-    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    try {
+      var client = window.supabase || window.Supabase || window.supabaseJs;
+      if (!client) throw new Error('Supabase CDN not loaded — window.supabase is undefined');
+      db = client.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch (e) {
+      setLobbyError('Init error: ' + e.message);
+      console.error('[ARGame] initSupabase failed:', e);
+      throw e;
+    }
   }
 
   // ─── Panel management ──────────────────────────────────────────────────────
@@ -594,7 +602,7 @@
 
   // ─── Boot ──────────────────────────────────────────────────────────────────
   function boot() {
-    initSupabase();
+    try { initSupabase(); } catch (e) { /* error already shown in setLobbyError */ }
     showPanel('lobby');
 
     // Lobby buttons
@@ -656,6 +664,16 @@
     // Hide join section initially
     toggleJoinSection(false);
   }
+
+  // Expose globally so inline onclick attributes work as fallback
+  window.createGame = createGame;
+  window.joinGame   = joinGame;
+
+  // Catch-all: show any unhandled errors in the lobby
+  window.addEventListener('error', function (e) {
+    setLobbyError('JS error: ' + e.message);
+    console.error('[ARGame] uncaught error:', e);
+  });
 
   // Boot on DOM ready — don't wait for A-Frame (buttons/Supabase don't need it)
   if (document.readyState === 'loading') {
